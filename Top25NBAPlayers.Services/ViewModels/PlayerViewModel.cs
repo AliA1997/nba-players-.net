@@ -28,6 +28,11 @@ namespace Top25NBAPlayers.Services.ViewModels
 
         public double SeasonRebounds { get; set; }
 
-        public double SeasonFieldGoalPercentage { get; set; }
+        public double SeasonFieldGoalPercentage { get; set; }   
+
+        public DateTime Deleted_Date { get; set; }
+
+        public DateTime Updated_Date { get; set; }
+
     }
 }

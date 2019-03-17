@@ -27,6 +27,12 @@ namespace Top25NBAPlayers.Web.Controllers
             return Ok(players);
         }
 
+        [HttpGet("deleted")]
+        public IActionResult GetDeletedPlayers()
+        {
+            List<PlayerItemViewModel> deletedPlayers = _playerService.GetDeletedPlayers();
+            return Ok(deletedPlayers);
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetPlayer(Guid id)
@@ -52,12 +58,25 @@ namespace Top25NBAPlayers.Web.Controllers
             return Ok(updatedMessage);
         }
 
+        [HttpPatch("restore/{id}")]
+        public async Task<IActionResult> RestorePlayer(Guid id)
+        {
+            string restoreMessage = await _playerService.RestorePlayer(id);
+            return Ok(restoreMessage);
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlayer(Guid id)
         {
             string deletedMessage = await _playerService.DeletePlayer(id);
             return Ok(deletedMessage);
+        }
+
+        [HttpDelete("permanently_delete/{id}")]
+        public async Task<IActionResult> PermanentlyDeletePlayer(Guid id)
+        {
+            string permanentlyDeleteMessage = await _playerService.PermanentlyDeletePlayer(id);
+            return Ok(permanentlyDeleteMessage);
         }
     }
 }

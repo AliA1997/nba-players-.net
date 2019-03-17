@@ -26,9 +26,24 @@ namespace Top25NBAPlayers.Services.Services.Impl
                                                                                            teamId: team.Id,
                                                                                            name: team.Name,
                                                                                            logo: team.Logo,
-                                                                                           greatestPlayer: team.GreatestPlayer
+                                                                                           greatestPlayer: team.GreatestPlayer,
+                                                                                           deleted_date: null
                                                                                     ))
                                                        .ToList();
+            return teamsToReturn;
+        }
+
+        public List<TeamItemViewModel> GetDeletedTeams()
+        {
+            List<TeamItemViewModel> teamsToReturn = _repo.GetDeletedTeams()
+                                                        .Select(team => ModelFactory.CreateViewModel(
+                                                                                        teamId: team.Id,
+                                                                                        name: team.Name,
+                                                                                        logo: team.Logo,
+                                                                                        greatestPlayer: team.GreatestPlayer,
+                                                                                        deleted_date: team.Deleted_Date
+                                                                                    ))
+                                                         .ToList();
             return teamsToReturn;
         }
 
@@ -57,6 +72,18 @@ namespace Top25NBAPlayers.Services.Services.Impl
         public async Task<string> DeleteTeam(Guid teamId)
         {
             await _repo.DeleteTeam(teamId);
+            return $"{teamId} has been deleted!";
+        }
+
+        public async Task<string> RestoreTeam(Guid teamId)
+        {
+            await _repo.RestoreTeam(teamId);
+            return $"{teamId} has been restored!";
+        }
+
+        public async Task<string> PermanentlyDeleteTeam(Guid teamId)
+        {
+            await _repo.PermanentlyDeleteTeam(teamId);
             return $"{teamId} has been deleted!";
         }
     }

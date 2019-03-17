@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Top25NBAPlayers.Data;
 
 namespace Top25NBAPlayers.Data.Migrations
 {
     [DbContext(typeof(Top25NBAPlayersContext))]
-    partial class Top25NBAPlayersContextModelSnapshot : ModelSnapshot
+    [Migration("20190317005820_AddPermanentlyDeletedFields")]
+    partial class AddPermanentlyDeletedFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

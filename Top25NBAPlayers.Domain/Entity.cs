@@ -9,5 +9,7 @@ namespace Top25NBAPlayers.Domain
     {
         public Guid Id { get; set; }
         public int Deleted_Ind { get; set; }
+        public DateTime Deleted_Date { get; set; }
+        public int Permanently_Deleted_Ind { get; set; }
     }
 }

@@ -19,7 +19,12 @@ namespace Top25NBAPlayers.Data.Repositories.Impl
 
         public IEnumerable<Player> GetPlayers()
         {
-            return _context.Players;
+            return _context.Players.Where(player => player.Deleted_Ind != 1);
+        }
+
+        public IEnumerable<Player> GetDeletedPlayers()
+        {
+            return _context.Players.Where(player => player.Deleted_Ind == 1 && player.Permanently_Deleted_Ind != 1);
         }
 
         public Player GetPlayer(Guid id)
@@ -46,7 +51,28 @@ namespace Top25NBAPlayers.Data.Repositories.Impl
         public async Task DeletePlayer(Guid playerId)
         {
             Player playerToDelete = await _context.Players.FirstOrDefaultAsync(player => player.Id == playerId);
-            _context.Players.Remove(playerToDelete);
+            playerToDelete.Deleted_Ind = 1;
+            playerToDelete.Deleted_Date = DateTime.UtcNow;
+            _context.Players.Update(playerToDelete);
+            await _context.SaveChangesAsync();
+            return;
+        }
+
+        public async Task RestorePlayer(Guid playerId)
+        {
+            Player playerToRestore = await _context.Players.FirstOrDefaultAsync(player => player.Id == playerId);
+            playerToRestore.Deleted_Ind = 0;
+            playerToRestore.Deleted_Date = new DateTime();
+            _context.Players.Update(playerToRestore);
+            await _context.SaveChangesAsync();
+            return;
+        }
+
+        public async Task PermanentlyDeletePlayer(Guid playerId)
+        {
+            Player playerToDelete = await _context.Players.FirstOrDefaultAsync(player => player.Id == playerId);
+            playerToDelete.Permanently_Deleted_Ind = 1;
+            _context.Players.Update(playerToDelete);
             await _context.SaveChangesAsync();
             return;
         }

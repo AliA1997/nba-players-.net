@@ -18,5 +18,9 @@ namespace Top25NBAPlayers.Services.ViewModels
 
         public int Championships { get; set; }
 
+        public DateTime Deleted_Date { get; set; }
+
+        public DateTime Updated_Date { get; set; }
+    
     }
 }

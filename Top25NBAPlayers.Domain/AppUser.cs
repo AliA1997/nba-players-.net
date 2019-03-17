@@ -8,15 +8,19 @@ namespace Top25NBAPlayers.Domain
     {
         private AppUser() { }
 
-        public AppUser(string displayName, string password, int? deletedInd)
+        public AppUser(string displayName, string avatar, string password, int? deletedInd)
         {
             DisplayName = displayName;
+            Avatar = avatar;
             Password = password;
             if (deletedInd != null)
                 Deleted_Ind = 1;
         }
 
-        public string Password { get; set; }
         public string DisplayName { get; set; }
+        
+        public string Avatar { get; set; }
+
+        public string Password { get; set; }
     }
 }

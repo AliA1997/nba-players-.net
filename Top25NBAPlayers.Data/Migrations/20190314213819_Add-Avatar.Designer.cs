@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Top25NBAPlayers.Data;
 
 namespace Top25NBAPlayers.Data.Migrations
 {
     [DbContext(typeof(Top25NBAPlayersContext))]
-    partial class Top25NBAPlayersContextModelSnapshot : ModelSnapshot
+    [Migration("20190314213819_Add-Avatar")]
+    partial class AddAvatar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,15 +26,11 @@ namespace Top25NBAPlayers.Data.Migrations
 
                     b.Property<string>("Avatar");
 
-                    b.Property<DateTime>("Deleted_Date");
-
                     b.Property<int>("Deleted_Ind");
 
                     b.Property<string>("DisplayName");
 
                     b.Property<string>("Password");
-
-                    b.Property<int>("Permanently_Deleted_Ind");
 
                     b.HasKey("Id");
 
@@ -50,8 +48,6 @@ namespace Top25NBAPlayers.Data.Migrations
 
                     b.Property<int>("Championships");
 
-                    b.Property<DateTime>("Deleted_Date");
-
                     b.Property<int>("Deleted_Ind");
 
                     b.Property<int>("JerseyNumber");
@@ -59,8 +55,6 @@ namespace Top25NBAPlayers.Data.Migrations
                     b.Property<int>("Mvps");
 
                     b.Property<string>("Name");
-
-                    b.Property<int>("Permanently_Deleted_Ind");
 
                     b.Property<double>("SeasonAssists");
 
@@ -84,8 +78,6 @@ namespace Top25NBAPlayers.Data.Migrations
 
                     b.Property<int>("Championships");
 
-                    b.Property<DateTime>("Deleted_Date");
-
                     b.Property<int>("Deleted_Ind");
 
                     b.Property<string>("GreatestPlayer");
@@ -95,8 +87,6 @@ namespace Top25NBAPlayers.Data.Migrations
                     b.Property<string>("Logo");
 
                     b.Property<string>("Name");
-
-                    b.Property<int>("Permanently_Deleted_Ind");
 
                     b.HasKey("Id");
 

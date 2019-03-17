@@ -8,16 +8,28 @@ namespace Top25NBAPlayers.Services.Factory
 {
     public static class ModelFactory
     {
-        public static PlayerItemViewModel CreateViewModel(Player playerToConvert, string team)
+        public static PlayerItemViewModel CreateViewModel(Player playerToConvert, string team, DateTime? deleted_date)
         {
-            return new PlayerItemViewModel()
-            {
-                Id = playerToConvert.Id,
-                Name = playerToConvert.Name,
-                Avatar = playerToConvert.Avatar,
-                JerseyNumber = playerToConvert.JerseyNumber,
-                Team = team
-            };
+
+            if (deleted_date == null)
+                return new PlayerItemViewModel()
+                {
+                    Id = playerToConvert.Id,
+                    Name = playerToConvert.Name,
+                    Avatar = playerToConvert.Avatar,
+                    JerseyNumber = playerToConvert.JerseyNumber,
+                    Team = team
+                };
+            else
+                return new PlayerItemViewModel()
+                {
+                    Id = playerToConvert.Id,
+                    Name = playerToConvert.Name,
+                    Avatar = playerToConvert.Avatar,
+                    JerseyNumber = playerToConvert.JerseyNumber,
+                    Team = team,
+                    Deleted_Date = DateTime.Parse($"{deleted_date}")
+                };
         }
         public static PlayerViewModel CreateViewModel(Player playerToConvert)
         {
@@ -37,15 +49,25 @@ namespace Top25NBAPlayers.Services.Factory
             };
         }
 
-        public static TeamItemViewModel CreateViewModel(Guid teamId, string name, string logo, string greatestPlayer)
+        public static TeamItemViewModel CreateViewModel(Guid teamId, string name, string logo, string greatestPlayer, DateTime? deleted_date)
         {
-            return new TeamItemViewModel()
-            {
-                Id = teamId,
-                Name = name,
-                Logo = logo,
-                GreatestPlayer = greatestPlayer
-            };
+            if(deleted_date == null) 
+                return new TeamItemViewModel()
+                {
+                    Id = teamId,
+                    Name = name,
+                    Logo = logo,
+                    GreatestPlayer = greatestPlayer
+                };
+            else
+                return new TeamItemViewModel()
+                {
+                    Id = teamId,
+                    Name = name,
+                    Logo = logo,
+                    GreatestPlayer = greatestPlayer,
+                    Deleted_Date = DateTime.Parse($"{deleted_date}")
+                };
         }
 
         public static TeamViewModel CreateViewModel(Team teamToConvert)
@@ -58,6 +80,16 @@ namespace Top25NBAPlayers.Services.Factory
                 GreatestPlayer = teamToConvert.GreatestPlayer,
                 LastChampionship = teamToConvert.LastChampionship,
                 Championships = teamToConvert.Championships
+            };
+        }
+
+        public static UserViewModel CreateViewModel(AppUser userToConvert)
+        {
+            return new UserViewModel()
+            {
+                Id = userToConvert.Id, 
+                DisplayName = userToConvert.DisplayName,
+                Avatar = userToConvert.Avatar
             };
         }
 

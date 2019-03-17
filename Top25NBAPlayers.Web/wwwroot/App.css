@@ -1,0 +1,20 @@
+
+.field {
+    width:100% !important;
+}
+
+#player-card, #team-card {
+    width: 25%;
+}
+
+@media screen and (max-width: 960px) {
+    #player-card, #team-card {
+        width: 40% !important;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    #player-card, #team-card {
+        width: 80% !important;
+    }
+}

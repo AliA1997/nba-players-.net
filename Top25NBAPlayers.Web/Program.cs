@@ -40,6 +40,7 @@ namespace Top25NBAPlayers.Web
 
                     EnsureTeamData.Seed(context);
                     EnsurePlayerData.Seed(context);
+                    EnsureUserData.Seed(context);
                 }
                 catch (Exception ex)
                 {

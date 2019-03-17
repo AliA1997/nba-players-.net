@@ -1,5 +1,8 @@
+require('@babel/polyfill');
 //import your webpack plugin for using your index.html as a template for your index.html file in your public folder.
 const htmlPlugin = require('html-webpack-plugin');
+//Import the @babel/plugin-trasnform-runtime to prevent regeneratorRuntime error.
+// const runtimePlugin = require('@babel/plugin-transform-runtime');
 //import the path module for joining paths.
 const path = require('path');
 
@@ -7,13 +10,14 @@ const path = require('path');
 //Export a object for defining your bundler.
 module.exports = {
     //Entry file for your react application
-    entry: path.join(__dirname, '/index.js'),
+    entry: ['@babel/polyfill', path.join(__dirname, '/index.js')],
     //OUtput for your bundled file.
     output: {
         //Name of bundled file.
         filename: 'bundle.js',
         //Path of your bundled file.
-        path: path.join(__dirname, '/dist')
+        path: path.join(__dirname, '/dist'),
+        publicPath: '/'
     },
     //When using webpack dev server define a devServer attribute.
     devServer: {
@@ -93,6 +97,7 @@ module.exports = {
     plugins: [
         new htmlPlugin({
             template: path.join(__dirname, 'index.html')
-        })
+        }),
+        // new runtimePlugin()({})
     ]
 }

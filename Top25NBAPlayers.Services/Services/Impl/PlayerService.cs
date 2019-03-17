@@ -26,10 +26,22 @@ namespace Top25NBAPlayers.Services.Services.Impl
             List<PlayerItemViewModel> playersToReturn = _repo.GetPlayers()
                                                                 .Select(player => {
                                                                     string team = _teamRepo.GetTeam(player.TeamId).Name;
-                                                                    return ModelFactory.CreateViewModel(player, team);
+                                                                    return ModelFactory.CreateViewModel(player, team, null);
                                                                 })
                                                                 .ToList();
             return playersToReturn;
+        }
+
+        public List<PlayerItemViewModel> GetDeletedPlayers()
+        {
+            List<PlayerItemViewModel> playersToReturn = _repo.GetDeletedPlayers()
+                                                            .Select(player =>
+                                                            {
+                                                                string team = _teamRepo.GetTeam(player.TeamId).Name;
+                                                                return ModelFactory.CreateViewModel(player, team, player.Deleted_Date);
+                                                            })
+                                                            .ToList();
+            return playersToReturn; 
         }
 
         public PlayerViewModel GetPlayer(Guid id)
@@ -62,6 +74,18 @@ namespace Top25NBAPlayers.Services.Services.Impl
         {
             await _repo.DeletePlayer(playerId);
             return $"{playerId} has been deleted!";
+        }
+
+        public async Task<string> RestorePlayer(Guid playerId)
+        {
+            await _repo.RestorePlayer(playerId);
+            return $"{playerId} has been restored!";
+        }
+
+        public async Task<string> PermanentlyDeletePlayer(Guid playerId)
+        {
+            await _repo.PermanentlyDeletePlayer(playerId);
+            return $"{playerId} has been permanently deleted!";
         }
     }
 }

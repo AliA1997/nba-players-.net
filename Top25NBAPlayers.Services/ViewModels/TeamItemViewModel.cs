@@ -10,5 +10,7 @@ namespace Top25NBAPlayers.Services.ViewModels
         public string Name { get; set; }
         public string Logo { get; set; }
         public string GreatestPlayer { get; set; }
+        public DateTime Deleted_Date { get; set; }
+        public DateTime Updated_Date { get; set; }
     }
 }

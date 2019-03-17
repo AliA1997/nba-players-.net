@@ -1,35 +1,49 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import initialState from '../../redux/initialState';
-import * as TeamActions from '../../redux/teamActions';
-import teamReducer from '../../redux/teamReducer';
-import { Container, Header, Image, Card } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Container, Header, Image, Card, Table } from 'semantic-ui-react';
+import { server } from '../../utils';
 
 
 const Team = (props) => {
-    const { id } = this.props.match.params;
-    const [ currentTeam ] = useReducer(teamReducer, initialState);
+    const { id } = props.match.params;
+    const [ currentTeam, setCurrentTeam ] = useState({});
 
-    useEffect(async () => {
-        await TeamActions.getTeam(id);
-    })
+    useEffect(() => {
+        async function getTeam(id) {
+            try {
+                const teamResult = await fetch(`${server}/teams/${id}`, { method: 'GET', mode: 'cors'});
+                const jsonTeam = await teamResult.json();
+                setCurrentTeam(jsonTeam);
+            } catch(error) {
+                console.log("Get Team Error-----------" , error);
+            }
+        }
+
+        getTeam(id);
+    }, {})
 
     return (
         <Container>
             <Header as="h1">{currentTeam.name}</Header>
-            <Image src={currentTeam.logo} />
-            <Card>
-                <Card.Content>
-                    <Card.Header>Info</Card.Header>
-                    <Card.Description>
-                        Greatest Player: {currentTeam.greatestPlayer}
-                    </Card.Description>
-                    <Card.Description>
-                        Last Championship: {currentTeam.lastChampionship}
-                    </Card.Description>
-                    <Card.Description>
-                        Championships: {currentTeam.championships}
-                    </Card.Description>
-                </Card.Content>
+            <Image src={currentTeam.logo} style={{height: '400px'}}/>
+            <Card style={{width: '75%'}}>
+                
+                <Table>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.Cell>Greatest Player</Table.Cell>
+                            <Table.Cell>Last Championship</Table.Cell>
+                            <Table.Cell>Championships</Table.Cell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        <Table.Row>
+                            <Table.Cell>{currentTeam.greatestPlayer}</Table.Cell>
+                            <Table.Cell>{currentTeam.lastChampionship}</Table.Cell>
+                            <Table.Cell>{currentTeam.championships}</Table.Cell>
+                        </Table.Row>
+                    </Table.Body>
+                </Table>
+            
             </Card>
         </Container>
     );

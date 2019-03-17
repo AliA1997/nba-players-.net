@@ -7,7 +7,7 @@ export function deepCopy(obj) {
     const newObj = {};
 
     for(let i = 0; i < keys.length; i++) {
-        if(typeof obj[keys[i]] == 'object') 
+        if(typeof obj[keys[i]] == 'object' && obj[keys[i]]) 
             newObj[keys[i]] = deepCopy(obj[keys[i]]);
         
         newObj[keys[i]] = obj[keys[i]];
